@@ -10,26 +10,13 @@
 	{% block body %} 
 	<br>
 	<div class="container-fluid">
-		<h1>All Posts</h1>
-
-		<hr>
-		<h2>Create New Blog Post:</h2>
-		<form action='/posts' method='POST'>
-			Title: <input class="form-control" type="text" placeholder="title your post" aria-label="Search" name='title' id='title'>
-			<br>
-			Author: <input class="form-control" type="text" placeholder="your name" aria-label="Search" name='author' id='author'>
-			<br>
-		<div class="form-group">
-		    <label for="content">Post</label>
-		    <textarea class="form-control" name='content' id="content" rows="4" placeholder='enter content'></textarea>
-		  </div>
-			<input class="btn btn-success" type='submit' value='Post'>
-		</form>
+		<h1 style="display:inline">All Posts</h1>
+		<a style="display:inline" class="btn btn-success float-right" href='/posts/new'>New Post</a>
 	</div>
 	<hr>
 
 		{% for post in posts %}
-		<div class="container-fluid" id="postdiv">
+		<div class="container-fluid">
 			<h2>{{ post.title }}</h2>
 			{% if post.author %}
 				<small>Written by: {{ post.author }} on {{post.date_posted}}</small>

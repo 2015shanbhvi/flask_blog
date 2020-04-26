@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(app)
 
-#database models
+#DATABASE MODEL
 class BlogPost(db.Model):
 	id = db.Column(db.Integer, primary_key=True) #unique
 	title = db.Column(db.String(100), nullable=False) #required field
@@ -20,14 +20,12 @@ class BlogPost(db.Model):
 	def __repr__(self):
 		return 'Blog post' + str(self.id)
 
-
+#ROUTE: /
 @app.route('/')
 def index():
 	return render_template('index.html')
 
-
-#to delete:
-#db.session.delete(BlogPost.query.get(<put id here>))
+#ROUTE: /posts
 @app.route('/posts', methods=['GET', 'POST'])
 def posts():
 	#Q: where is this request coming from?
@@ -46,6 +44,7 @@ def posts():
 
 #if we get to this URL
 #then use the id in the URL to delete the post with that id
+#ROTUE: /posts/delete
 @app.route('/posts/delete/<int:id>')
 def delete(id):
 	post = BlogPost.query.get_or_404(id)
@@ -54,7 +53,7 @@ def delete(id):
 	return redirect('/posts')
 
 
-
+#ROUTE: /posts/edit 
 @app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
 
@@ -68,6 +67,21 @@ def edit(id):
 		return redirect('/posts')
 	else:
 		return render_template('edit.html', post=post)
+
+#NEW POST
+@app.route('/posts/new', methods=['GET', 'POST'])
+def new_post():
+
+	if(request.method == 'POST'):
+		post_title = request.form['title']
+		post_content = request.form['content']
+		post_author = request.form['author']
+		new_post = BlogPost(title=post_title, content=post_content, author=post_author)
+		db.session.add(new_post)
+		db.session.commit()
+		return redirect('/posts')
+	else: #no variable to get, bc just empty new_post.html form
+		return render_template('new_post.html')
 
 #show errors if we are here
 if __name__ == '__main__':
