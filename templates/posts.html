@@ -7,34 +7,42 @@
 
 
 
-
 	{% block body %} 
-	<h1>All Posts</h1>
+	<br>
+	<div class="container-fluid">
+		<h1>All Posts</h1>
 
-	<hr>
-	<h2>Create New Blog Post:</h2>
-	<form action='/posts' method='POST'>
-		Title: <input type='text' name='title' id='title'>
-		<br>
-		Author: <input type='text' name='author' id='author'>
-		<br>
-		Post: <input type='text' name='content' id='content'>
-		<br>
-		<input type='submit' value='Post'>
-	</form>
+		<hr>
+		<h2>Create New Blog Post:</h2>
+		<form action='/posts' method='POST'>
+			Title: <input class="form-control" type="text" placeholder="title your post" aria-label="Search" name='title' id='title'>
+			<br>
+			Author: <input class="form-control" type="text" placeholder="your name" aria-label="Search" name='author' id='author'>
+			<br>
+		<div class="form-group">
+		    <label for="content">Post</label>
+		    <textarea class="form-control" name='content' id="content" rows="4" placeholder='enter content'></textarea>
+		  </div>
+			<input class="btn btn-success" type='submit' value='Post'>
+		</form>
+	</div>
 	<hr>
 
 		{% for post in posts %}
+		<div class="container-fluid" id="postdiv">
 			<h2>{{ post.title }}</h2>
 			{% if post.author %}
-				<h4>By: {{ post.author }}</h4>
+				<small>Written by: {{ post.author }} on {{post.date_posted}}</small>
 			{% else %}
-				<h4>By: N/A</h4>
+				<h4>By: N/A on {{post.date_posted}}</h4>
 			{% endif %}
-			<p>{{ post.content }}</p>
-			<a href='/posts/delete/{{post.id}}'>Delete</a>
-			<a href='/posts/edit/{{post.id}}'>Edit</a>
+			<br>
+			<br>
+			<p style="white-space:pre-wrap"> {{ post.content }}</p>
+			<a class="btn btn-danger" href='/posts/delete/{{post.id}}'>Delete</a>
+			<a class="btn btn-info" href='/posts/edit/{{post.id}}'>Edit</a>
 			<hr>
+		</div>
 		{% endfor %}
 
 	{% endblock %}

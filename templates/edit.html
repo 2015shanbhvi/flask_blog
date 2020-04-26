@@ -8,14 +8,18 @@
 	{% block body %} 
 	<hr>
 	<h2>Edits:</h2>
+
 	<form action='/posts/edit/{{post.id}}' method='POST'>
-		Title: <input type='text' name='title' id='title' value='{{post.title}}'>
+		Title: <input class="form-control" type="text" aria-label="Search" name='title' id='title' value='{{post.title}}'>
 		<br>
-		Author: <input type='text' name='author' id='author' value='{{post.author}}'>
+		Author: <input class="form-control" type="text" aria-label="Search" name='author' id='author' value='{{post.author}}'>
 		<br>
-		Post: <input type='text' name='content' id='content' value='{{post.content}}'>
-		<br>
-		<input type='submit' value='Save'>
+		<div class="form-group">
+		    <label for="content">Post</label>
+		    <textarea class="form-control" name='content' id="content" rows="4">{{post.content}}</textarea>
+		  </div>
+			<br>
+			<input class="btn btn-success" type='submit' value='Save'>
 	</form>
 	<hr>
 
