@@ -53,7 +53,7 @@ def delete(id):
 	return redirect('/posts')
 
 
-#ROUTE: /posts/edit 
+#ROUTE: /posts/edit
 @app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
 
